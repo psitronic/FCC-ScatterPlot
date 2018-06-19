@@ -1,7 +1,7 @@
 const dataUrl = "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json"
 const margin = {top: 30, right: 20, bottom: 30, left: 50},
-	width = 600 - margin.left - margin.right,
-	height = 270 - margin.top - margin.bottom;
+	width = 640 - margin.left - margin.right,
+	height =280 - margin.top - margin.bottom;
 
 const parseYear = d3.timeParse("%Y");
 const parseTime = d3.timeParse("%M:%S");
@@ -36,7 +36,7 @@ d3.json(dataUrl, (error, dataset) => {
 					.range([0, width]);
 
     var yScale = d3.scaleTime()
-                    .domain([minTime, maxTime])
+                    .domain([maxTime, minTime])
                     .range([height, 0]);
 
 
@@ -44,7 +44,9 @@ d3.json(dataUrl, (error, dataset) => {
 		.append("svg")
 		.attr("class", "graph")
 		.attr("width", width + margin.left + margin.right)
-		.attr("height", height + margin.top + margin.bottom);
+		.attr("height", height + margin.top + margin.bottom)
+		.append("g")
+		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	var xAxis = d3.axisBottom(xScale);
 	var yAxis = d3.axisLeft(yScale)
@@ -59,18 +61,27 @@ d3.json(dataUrl, (error, dataset) => {
 	svg.append("g")
 		.attr("id", "y-axis")
 		.attr("class", "axis")
-		.attr("transform", "translate( " + (margin.left + margin.right) + ",0)")
+		// .attr("transform", "translate( " + (margin.left + margin.right) + ",0)")
 		.call(yAxis);
 
 
 	svg.selectAll("circle")
 		.data(data)
 		.enter().append("circle")
-		.attr("fill", "steelblue")
 		.attr("class", "dot")
 		.attr("cx", (d) => xScale(d.Year))
 		.attr("cy", (d) => yScale(d.Time))
-		.attr("r", 3);
+		.attr("r", 5)
+		.attr("opacity", 0.5)
+		.attr("color", "black")
+		.attr("fill", (d) => {
+			if (d.Doping === "") {
+				return "lightgreen";
+			} else {
+				return "steelblue";
+			}
+		});
+
 
 	// console.log(data);
 });
