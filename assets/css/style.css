@@ -1,4 +1,35 @@
+body{
+	margin: 0;
+	font-family: "Roboto";
+}
+
+html{
+	height: 100%
+}
+
+.container{
+	margin: 5% auto;
+	text-align: center;
+}
 .dot {
   stroke: black;
   stroke-width: 1px;
+  fill-opacity: 0.5;
+  color: black;
+}
+
+div.tooltip {
+	position: absolute;
+	text-align: left;
+	width: auto;
+	height: auto;
+	white-space: nowrap;
+	vertical-align: center;
+	padding: 8px;
+	font: 16px sans-serif;
+	background: lightsteelblue;
+	border: 0px;
+	border-radius: 3px;
+	pointer-events: none;
+	box-shadow: 3px 3px 5px grey;
 }
