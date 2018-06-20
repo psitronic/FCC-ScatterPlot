@@ -33,3 +33,20 @@ div.tooltip {
 	pointer-events: none;
 	box-shadow: 3px 3px 5px grey;
 }
+
+.axis {
+	font-size: 18px;
+}
+
+.title {
+	font-size: 34px;
+	font-weight: 700;
+}
+
+.subtitle {
+	font-size: 24px;
+}
+
+.axisTitle {
+	font-size: 26px;
+}

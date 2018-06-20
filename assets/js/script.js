@@ -1,5 +1,5 @@
 const dataUrl = "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json"
-const margin = {top: 30, right: 20, bottom: 30, left: 50},
+const margin = {top: 50, right: 20, bottom: 70, left: 90},
 	width = 1000 - margin.left - margin.right,
 	height = 600 - margin.top - margin.bottom;
 
@@ -62,14 +62,16 @@ d3.json(dataUrl, (error, dataset) => {
 	svg.append("text")
 		.attr("transform", "rotate(-90)")
 		.attr("x", - height/2)
-		.attr("y", 30)
-		.text("GDP [Million USD]")
+		.attr("y", -65)
+		.style("text-anchor", "middle")
+		.text("Time in minutes")
 		.attr("class", "axisTitle");
 
 	svg.append("text")
 		.attr("x", (width)/2)
 		.attr("y", height + 50)
-		.text("Time [Year]")
+		.style("text-anchor", "middle")
+		.text("Year")
 		.attr("class", "axisTitle");
 
 	svg.append("text")
@@ -79,6 +81,15 @@ d3.json(dataUrl, (error, dataset) => {
 		.attr("text-anchor", "middle")
 		.text("Doping in Professional Bicycle Racing")
 		.attr("class", "title");
+
+	svg.append("text")
+		.attr("id", "subtitle")
+		.attr("x", (width / 2))
+		.attr("y", 30 - (margin.top / 2))
+		.attr("text-anchor", "middle")
+		.text(dataset.length + " Fastest times up Alpe d'Huez")
+		.attr("class", "subtitle");
+
 
 	svg.append("g")
 		.attr("id", "x-axis")
