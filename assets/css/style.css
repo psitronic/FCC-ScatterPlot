@@ -11,12 +11,6 @@ html{
 	margin: 5% auto;
 	text-align: center;
 }
-.dot {
-  stroke: black;
-  stroke-width: 1px;
-  fill-opacity: 0.5;
-  color: black;
-}
 
 div.tooltip {
 	position: absolute;
@@ -49,4 +43,14 @@ div.tooltip {
 
 .axisTitle {
 	font-size: 26px;
+}
+
+.dot {
+	opacity: 0.5;
+	stroke: black;
+	stroke-width: 1px;
+}
+
+.legend {
+	font-size: 20px;
 }

@@ -5,7 +5,10 @@ const margin = {top: 50, right: 20, bottom: 70, left: 90},
 
 const parseYear = d3.timeParse("%Y");
 const parseTime = d3.timeParse("%M:%S");
-
+const legendRectSize = 22;
+const legendSpacing = 4;
+const legends = [{"text":"No doping allegations","doping": false}, {"text": "Riders with doping allegations", "doping": true}];
+const color = d3.scaleOrdinal(d3.schemeCategory10);
 
 d3.json(dataUrl, (error, dataset) => {
 
@@ -87,7 +90,7 @@ d3.json(dataUrl, (error, dataset) => {
 		.attr("x", (width / 2))
 		.attr("y", 30 - (margin.top / 2))
 		.attr("text-anchor", "middle")
-		.text(dataset.length + " Fastest times up Alpe d'Huez")
+		.text(data.length + " Fastest times up Alpe d'Huez")
 		.attr("class", "subtitle");
 
 
@@ -109,16 +112,10 @@ d3.json(dataUrl, (error, dataset) => {
 		.attr("class", "dot")
 		.attr("cx", (d) => xScale(d.Year))
 		.attr("cy", (d) => yScale(d.Time))
-		.attr("r", 7)
+		.attr("r", 10)
 		.attr("data-xvalue", (d) => d.Year)
 		.attr("data-yvalue", (d) => d.Time)
-		.style("fill", (d) => {
-			if (d.Doping === "") {
-				return "lightgreen";
-			} else {
-				return "steelblue";
-			}
-		})
+		.style("fill", (d) => {return color(d.Doping !== "")})
 		.on("mouseover", function(d) {
 			div.transition()
 			.duration(200)
@@ -135,6 +132,35 @@ d3.json(dataUrl, (error, dataset) => {
 			.duration(500)
 			.style("opacity", 0);
 		});
+
+	var legend = svg.selectAll(".legend")           
+		.data(color.domain())                                   
+		.enter()                                          
+		.append("g")                                      
+		.attr("class", "legend") 
+		.attr("id", "legend")                         
+		.attr("transform", (d, i) => {
+			let h = 1.4 * width/2 - 2 * legendRectSize;           
+			let v = height/2  - i * (legendRectSize + legendSpacing);          		
+				return "translate(" + h + "," + v + ")";
+	});                                             
+
+	legend.append('rect')                             
+		.attr("width", legendRectSize)
+		.attr("height", legendRectSize)
+		.style("fill", color);
+
+	legend.append("text")                             
+		.attr("x", legendRectSize + legendSpacing)      
+		.attr("y", legendRectSize - legendSpacing)      
+		.text((d) => { if (d) {
+			return legends[0].text;
+		} else {
+			return legends[1].text;	
+		}
+	}); 
+
+	console.log(svg.selectAll("circle"));
 
 	// console.log(data);
 });
