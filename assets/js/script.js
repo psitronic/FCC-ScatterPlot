@@ -10,24 +10,33 @@ const legendSpacing = 4;
 const legends = [{"text":"No doping allegations","doping": false}, {"text": "Riders with doping allegations", "doping": true}];
 const color = d3.scaleOrdinal(d3.schemeCategory10);
 
-d3.json(dataUrl, (error, dataset) => {
 
-	let data = dataset.map((d) => {
-		return {
-			Doping: d.Doping,
-			Name: d.Name,
-			Nationality: d.Nationality,
-			Place: d.Place,
-			Sceonds: d.Seconds,
-			Time: parseTime(d.Time),
-			URL: d.URL,
-			Year: parseYear(d.Year)
+const getData = new Promise((resolve, reject) => {
+	d3.json(dataUrl, (error, dataset) => {
+
+		if (error) {
+			reject(error);
+		} else {
+			let data = dataset.map((d) => {
+				return {
+					Doping: d.Doping,
+					Name: d.Name,
+					Nationality: d.Nationality,
+					Place: d.Place,
+					Sceonds: d.Seconds,
+					Time: parseTime(d.Time),
+					URL: d.URL,
+					Year: parseYear(d.Year)
+				};
+			});
+
+			resolve(data);
 		};
 	});
+});
 
-	// console.log(data[0].Year.setFullYear(data[0].Year.getFullYear() - 10));
 
-
+getData.then((data) => {
 	const minYear = d3.min(data, (d) => d.Year);
 	const maxYear = d3.max(data, (d) => d.Year);
 	const minTime = d3.min(data, (d) => d.Time);
@@ -159,9 +168,5 @@ d3.json(dataUrl, (error, dataset) => {
 			return legends[1].text;	
 		}
 	}); 
-
-	console.log(svg.selectAll("circle"));
-
-	// console.log(data);
 });
 
