@@ -168,5 +168,6 @@ getData.then((data) => {
 			return legends[1].text;	
 		}
 	}); 
-});
+})
+.catch(error => console.log(error));
 
